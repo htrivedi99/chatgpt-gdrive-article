@@ -1,4 +1,5 @@
 import json
+import webbrowser
 from flask import Flask, request
 from flask_cors import CORS
 from google.oauth2.credentials import Credentials
@@ -157,7 +158,7 @@ def redirect_callback():
     return "Google Drive Authorization Successful!"
 
 
-@app.route("/authorize", methods=['POST'])
+@app.route("/authorize", methods=['GET'])
 def authorize_google_drive():
 
     flow = InstalledAppFlow.from_client_config(
@@ -167,6 +168,7 @@ def authorize_google_drive():
     )
 
     authorization_url, state = flow.authorization_url(prompt='consent')
+    webbrowser.open(authorization_url)
     return authorization_url
 
 
